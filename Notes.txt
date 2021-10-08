@@ -1,0 +1,59 @@
+Software engineering
+    Developers write code in high level languages
+    This code is compiled into machine code - a sequence of bytes that the cpu can interpret
+    Disassembly - process of converting byte sequesces into assembly instructions
+    As reverse engineers, byte sequences will be our starting point
+
+Compilation
+    4 steps
+        Preprocessing
+        Compilation
+        Assembly
+        Linking
+    After these 4 steps are done, an executable is produced
+
+    Preprocessing
+        Passes over source code and performs:
+            Comment removal
+            Macro expansion
+            Include Expansion
+            Conditional Compilation
+
+    Compilation - converts the output of preprocessor into assembly instructions
+
+    Assembly
+        Assemblers conver the assembly code into binary opcodes
+        The assembler will produce an object file
+            Object files contain machine code
+            This file will contain fields to be filled by the linker
+
+    Linking
+        More information is needed before the object code can be executed
+             Entry point, starting instruction needs to be specified
+        Used to define memory regions on embedded platforms
+             Done through linked scripts
+        Result of linking is the final executable program
+
+Output Formats
+    PE (Windows .exe files)
+    ELF (Linux)
+    Mach-O (OSX)
+    COFF/ECOFF
+
+    These output files are starting point for reverse engineers
+
+Elf Files
+    ELF - Executable Linking Format
+    Contains information about OS, endianness, memory, etc
+    ELF files have 3 components
+        ELF Header
+        Sections
+        Segments
+    This metadata is very valuable when reverse engineering
+    A few tools to analyze ELF files
+        dumpelf
+        readelf
+        objdump
+        elfutils
+
+17:00
