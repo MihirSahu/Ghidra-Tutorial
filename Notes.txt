@@ -55,5 +55,5 @@ Elf Files
         readelf
         objdump
         elfutils
-
-17:00
+    Elf file will contain machine code that can be converted back into assembly, which can then be converted into the original high level code
+        This process is called disassembly
