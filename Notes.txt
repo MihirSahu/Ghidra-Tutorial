@@ -57,3 +57,35 @@ Elf Files
         elfutils
     Elf file will contain machine code that can be converted back into assembly, which can then be converted into the original high level code
         This process is called disassembly
+
+Computer Architecture 101
+    When a programming is running
+        1. An instruction is read into memory
+        2. The instruction is processed by the Arithmetic Logic Unit
+        3. The result of the operation is stored into registers or memory
+    Basic components
+        Registers - small storage areas used by the processor
+            x86_64 assembly uses 16 64 bit general purpose registers
+            Special purpose registers
+                RIP - Instruction pointer
+                    Points to the next instruction to be executed
+                    64 bits in length
+                RFLAGS - Stores flags used for processor flow control
+                FPR0-FPR7 - Floating point status and control registers
+                RBP/RSP = Stack manipulation and usage
+
+        Instructions - Define the operations being performed by the CPU
+            Can have multiple operands, which define arguments for specific operation
+            Basic instructions for x86_64
+                mov rax, rbx
+                    Moves value from RBX to RAX
+                mov rax, [rcx]
+                    Moves the value pointed to by RCX into RAX
+                add rax, rbx
+                    Adds the two values together, storing the result in the first argument
+                sub rax, rbx
+                    Subtracts rbx from rax, stores result in first argument
+        Stack
+        Heap
+    x86_64 Architecture
+        Created by AMD in 2000
