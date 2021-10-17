@@ -85,7 +85,43 @@ Computer Architecture 101
                     Adds the two values together, storing the result in the first argument
                 sub rax, rbx
                     Subtracts rbx from rax, stores result in first argument
-        Stack
+                and rax, rax
+                    Performs the binary operation AND on the two operands, storing the result in the first
+                    Same syntax used on xor and or
+                jmp <address>
+                    Used to change what code is being executed
+                    Modifies value in EIP
+                    Ex. jmp 0x1000300
+                        Set EIP to 0x1000300 adn execute the instructions there
+                call <address>
+                    Used to implement function calls
+                    Ex. call 0x18000000
+                    Pushes the value of rbp and rip into stack before jumping
+                cmp
+                    Performs a comparison operation by subtracting the operands
+                    No storage is performed, instead based on the result, fields in RFLAGS are set
+                    Ex. cmp rax, #5
+
+        Addressing Modes
+            Instructions can access registers and memory in various modes
+            Immediate - the value is stored in the instruction
+                Ex. add rax, 14
+            Register to register
+                Ex. xor rax,rax
+            Indirect access
+                Ex. add rax, [rbx]
+
+        Stack - Region of contiguous memory
+            POP - reads from stack
+                pop rbx
+                    Loads the value pointed by rsp into rbx, and decreases rsp by 8
+            PUSH - writes to stack
+                push rax
+                    Increases the value pointed to by rsp by 8, and stores rax there
+            Elements are removed in the reverse order that they are added
+            Grows from high memory address to low memory address
+            RSP points to top of stack
+            RBP contains base pointer
         Heap
     x86_64 Architecture
         Created by AMD in 2000
