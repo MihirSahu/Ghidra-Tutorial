@@ -93,6 +93,9 @@ Computer Architecture 101
                     Modifies value in EIP
                     Ex. jmp 0x1000300
                         Set EIP to 0x1000300 adn execute the instructions there
+                    Other jmp variants
+                        jnz - jump if not zero
+                        jz - jump if zero
                 call <address>
                     Used to implement function calls
                     Ex. call 0x18000000
@@ -125,3 +128,11 @@ Computer Architecture 101
         Heap
     x86_64 Architecture
         Created by AMD in 2000
+
+Ghidra
+    Provides a disassembler and decompiler
+    Disassembler - go from raw bytes to assembly
+    Decompiler - go from assembly to c code
+    Ghidra groups binaries into projects
+    Programs and binaries can be imported into a project
+    File > New Project > Non-Shared Project
