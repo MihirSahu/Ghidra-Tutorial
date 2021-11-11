@@ -1,3 +1,5 @@
+Class 1
+--------
 Software engineering
     Developers write code in high level languages
     This code is compiled into machine code - a sequence of bytes that the cpu can interpret
@@ -59,13 +61,14 @@ Elf Files
         This process is called disassembly
 
 Computer Architecture 101
-    When a programming is running
+    When a program is running
         1. An instruction is read into memory
         2. The instruction is processed by the Arithmetic Logic Unit
         3. The result of the operation is stored into registers or memory
     Basic components
         Registers - small storage areas used by the processor
             x86_64 assembly uses 16 64 bit general purpose registers
+            x64 registers start with R (register), x86 start with E (extended)
             Special purpose registers
                 RIP - Instruction pointer
                     Points to the next instruction to be executed
@@ -90,12 +93,16 @@ Computer Architecture 101
                     Same syntax used on xor and or
                 jmp <address>
                     Used to change what code is being executed
-                    Modifies value in EIP
+                    Modifies value in RIP
                     Ex. jmp 0x1000300
                         Set EIP to 0x1000300 adn execute the instructions there
                     Other jmp variants
+                        je - jump if equal/zero
+                        jne - jump if not equal
                         jnz - jump if not zero
                         jz - jump if zero
+                        jl - jump if less
+                        jg - jump if greater
                 call <address>
                     Used to implement function calls
                     Ex. call 0x18000000
@@ -136,3 +143,75 @@ Ghidra
     Ghidra groups binaries into projects
     Programs and binaries can be imported into a project
     File > New Project > Non-Shared Project
+
+    Xrefs show what the line is referenced by
+
+
+Class 2
+--------
+    There is additional code outside the main functions that are used to launch the binary
+    Program startup and behavior is defined by the System V ABI (application binary interface)
+        Main arguments are determined by ABI
+    Within the ELF header there is an e_entry field that points the _start() function, which calls main
+
+    Function signatures
+        Can be edited in ghidra
+            Argument count
+            Argument types
+            Return values
+        Fixing the function signature can greatly improve decompiler output
+        Right click on function name -> edit function signature
+
+    The c standard defines the arguments passed to the main function
+        int argc = argument count
+        char **argv = argument vector
+        These can be applied to function to make it more readable
+            Is applied to assembly view too
+
+    Imports and Exports
+        Defined by ELF header
+        Can be viewed from the symbol tree
+            Imports - libraries that are utilized by your target binary
+            Exports - exposed information about out binary for the operating system loader
+        When importing a binary, users can also specify a part for libraries that are imported
+        For our challenges, main is always a good starting point
+            Defined by ABI
+            If you can't find main, start with _start
+
+    Control flow
+        Order in which instructions are executed
+        Common statements used to manipulate control flow:
+            if/else
+            goto
+            switch
+            while
+        These statements can be reconstructed by analyzing the resulting assembly code
+
+    Graph View
+        When looking at multiple branches, graph view can display multiple blocks of code
+        Can be useful when determining flow control
+        Can be entered through
+            Highlighting a function name
+            Window -> Function Graph
+
+    Switch Cases
+        Allow a variable to be compared against a list of values
+            Each value being compared against is a case
+        Expression for the case must have the same data type as the variable in the switch
+        The switch statement terminates on a break statement
+
+    Converting Data
+        In the listing view, data types can be converted
+            Hex, decimal, char, etc.
+        Right click an immediate value and select "Convert"
+            Multiple representations can be applied
+        This can be used to make the decompiler output more readable
+
+    Loops
+        Loops allow repeated execution of a block of code
+            Statements in the loop are executed sequentially
+        Loops can be implemented in assembly in multiple ways
+            CMP -> JMP
+            LOOP
+            REP
+        Usually operate under conditional code
