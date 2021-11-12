@@ -136,6 +136,13 @@ Computer Architecture 101
     x86_64 Architecture
         Created by AMD in 2000
 
+    C program assembly have common code in the first few lines that help set up the stack and save argc and argv
+        Ex.
+            push rbp    # Pushes base register value onto stack
+            mov rbp, rsp    # Moves top stack pointer register value into bottom stack pointer register value
+            DWORD PTR [rbp-0x14], edi     # Moves argc into stack at location rbp-0x14
+            DWORD PTR [rbp-0x20], rsi     # Moves argv into stack at location rbp-0x20
+
 Ghidra
     Provides a disassembler and decompiler
     Disassembler - go from raw bytes to assembly
@@ -215,3 +222,54 @@ Class 2
             LOOP
             REP
         Usually operate under conditional code
+
+    Highlighting/Slicing
+        When viewing the assembly listing or decompiler view, items can be hightlighted
+            Useful for tracking register usage in larger functions
+            Middle click on a variable to highlight
+                Right click for more highlight options
+        Slicing can be applied in the decompiler window
+            Will display usage of the selected variable
+        Ghidra will attempt to sync highlights between disassembly/decompiler views
+
+    Variables
+        When a variable is declared, it is declared withing a particular scope
+            The scope defines how accessible a variable is
+            We will defind two types of scopes for this course: local and global
+        Local variables are stored in the stack
+        Global variables are stored in the .data section of the ELF file
+
+    Labelling/Renaming
+        Variables and offsets can be labelled in ghidra
+            Useful for labelling memory regions
+            Makes pseudo code more understandable
+        Right click on variable > rename variable
+        Ghidra will sync the variable names between listing view and decompiler view
+
+    Functions
+        Functions are called using the call instruction
+            Call pushes the return address to the stack when called
+        The first 6 function parameters are passed in through registers
+            RDI, RSI, RDX, RCX, R8, R9
+            After this parameters are passed through the stack
+            Large parameters/structures passed by value are passed through the stack
+        ret is used to return from a function
+            The return address is popped off the stack and placed into RIP
+        Functions can be thought of as three components
+            Prologue - reserves space for variables on the stack
+            Body
+            Epilogue - cleans up the stack frame and returns it to it's original state
+
+    Calling Conventions
+        Define how function calls are implemented
+            How arguments are passed
+            How return values are passed back from functions
+            Stack management and register cleanup
+        GNU/Linux uses System V AMD64 ABI
+        Calling convention defined the epilogue/prologue for functions
+
+    Functions in Ghidra
+        Ghidra can perform function comparisons
+            Useful for doing side by side comparisons of similar functions
+        Ghidra will display the two functions side by side
+        Highlight two functions, right click > compare selected functions
