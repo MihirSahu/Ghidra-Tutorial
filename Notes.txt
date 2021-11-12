@@ -140,8 +140,8 @@ Computer Architecture 101
         Ex.
             push rbp    # Pushes base register value onto stack
             mov rbp, rsp    # Moves top stack pointer register value into bottom stack pointer register value
-            DWORD PTR [rbp-0x14], edi     # Moves argc into stack at location rbp-0x14
-            DWORD PTR [rbp-0x20], rsi     # Moves argv into stack at location rbp-0x20
+            mov DWORD PTR [rbp-0x14], edi     # Moves argc into stack at location rbp-0x14
+            mov DWORD PTR [rbp-0x20], rsi     # Moves argv into stack at location rbp-0x20
 
 Ghidra
     Provides a disassembler and decompiler
@@ -152,6 +152,8 @@ Ghidra
     File > New Project > Non-Shared Project
 
     Xrefs show what the line is referenced by
+
+    Assembly code is shown in the Listing view and C code is shown in the Decompiler view
 
 
 Class 2
@@ -273,3 +275,74 @@ Class 2
             Useful for doing side by side comparisons of similar functions
         Ghidra will display the two functions side by side
         Highlight two functions, right click > compare selected functions
+
+    Heap Memory
+        The heap is used for dynamic memory allocations
+            Used when the size of a variable can be varied
+            malloc/calloc - used to allocate
+        Heap memory is not managed automatically
+            Devs must manage it manually
+            free(var) used to free memory
+            Failure to do so results in memory leaks
+        Heap variables can be accessed globally
+
+    Stack vs Heap
+        Stack memory
+            No need to deallocate
+            Local variables only
+            Limited by stack size (OS dependent)
+            Statically sized variables
+        Heap memory
+            Variables can be accessed globally
+            No limit on size
+            Must be managed by user
+
+    Array Accesses
+        Array accesses often utilize the LEA instruction
+        LEA = Load Effective Address
+            Loads the address of the memory calculation into the register
+            Does not dereference the value as MOV would
+        LEA EAX, [EAX + EBX + 1234567]
+            Stores the value of EAX + EBX + 1234567 into EAX
+            Does not dereference!
+
+    * The decompiler view is a great resource, but it's not always correct. Use the Listing view with the assembly code if the decompiler with c code is unclear
+
+
+Class 3
+--------
+    A few RE tools other than ghidra
+        Radare/r2 - disassembler
+        IDA Pro - disassembler/decompiler
+            Large amount of plugins and community tools
+            Handles c++ binaries well
+            PDB parsing works well
+            In develpment for over a decade, was industry standard standard
+        Objdump - disassembler
+    All these tools have pros and cons, many use a combination of these tools
+    Factors to consider when choosing RE tools
+        Usability
+        Architecture support
+        File format support
+        Extendibility
+        Price
+    Experiment with as many tools as possible
+
+    Structures
+        User defined data type allowing for combining various data types
+        Composite data type defining a grouped list of variables under one name in a block of memory
+        Directly reference a contiguous block of memory
+            Padding bytes may be added for alignment purposes
+        Elements in structures need to be byte aligned
+            Most compilers do this, but is compiler dependent
+            Fields that are not byte aligned with the CPU will be padded
+                This is to stop unaligned accesses from occurring
+                Used for compiler optimizations as well
+            Ex. a byte sized element will occupy 4 bytes of memory but only use 1
+
+    Ghidra Structures
+        Structures can be added to ghidra in multiple ways
+            Import header files
+                File > import c source
+            Manual creation in struct creator
+                Can be done from the data types manager
