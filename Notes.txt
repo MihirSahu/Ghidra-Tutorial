@@ -343,6 +343,19 @@ Class 3
     Ghidra Structures
         Structures can be added to ghidra in multiple ways
             Import header files
-                File > import c source
+                File > Parse c source
             Manual creation in struct creator
                 Can be done from the data types manager
+
+    Non Ascii from Command Line
+        So far the challenges for the course have worked on ASCII inputs/outputs
+        Python can be used to provide non-ASCII input from the command line
+        To provide hex values 0x210010
+            Ex. ./exercise `python -c 'print "\x21\x00\x10"'`
+
+    Pointers
+        Pointer is a variable whose value is the address of another variable
+            Direct address of a memory location
+        Pointers provide an indirect method of accessing variables
+        Pointers are always the same size, despite the size of the data that they point to
+            This will be compiler/architecture dependent
