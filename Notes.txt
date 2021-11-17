@@ -122,6 +122,7 @@ Computer Architecture 101
                 Ex. add rax, [rbx]
 
         Stack - Region of contiguous memory
+            Contains local variables
             POP - reads from stack
                 pop rbx
                     Loads the value pointed by rsp into rbx, and decreases rsp by 8
@@ -359,3 +360,77 @@ Class 3
         Pointers provide an indirect method of accessing variables
         Pointers are always the same size, despite the size of the data that they point to
             This will be compiler/architecture dependent
+
+    Ghidra Pointers
+        Pointer to memory locations can be made in ghidra using the "Pointer" datatype
+            Right click > Data > Pointer
+        The unary operator can also be applied to any data type in the data types manager
+
+    Enums
+        Enums assign names to integral constructs
+            Ex. enum test {pass = 1, fail = 0};
+        Used to improve readibility
+        If values are not explicitely assigned to enum names, the compiler starts assignments at 0
+
+    Ghidra Enums
+        Similar to structures, enums can be imported through c files or defined manually
+        These imported/created enums can be applied to scalars in the disassembly listing
+        Variables in the decompiler view can also be re-typed to enums that you have defined
+
+    x86_64 System Calls
+        System calls are used to interface with the operating system
+            Used for operations which require privileged access
+            Most of the time this is done automatically through libc, but can be done through the syscall instruction
+        The operating system implements a system call handler to catch when this instruction occurs
+        Information about the requested syscall is passed through registers
+        Special registers for syscalls
+            Register        Purpose
+            RAX             System call number
+            RCX             Return address
+            R11             Saved RFLAGS
+            RDI             Argument 0 (for function calls)
+            RSI             Argument 1
+            RDX             Argument 2
+            R10             Argument 3
+            R8              Argument 4
+            R9              Argument 5
+        I found this great documentation abut system call numbers http://blog.rchapman.org/posts/Linux_System_Call_Table_for_x86_64/ it's really helpful for the syscall exercise
+
+    File Operations
+        While system calls are used at a low level to perfom file operations, you will often see higher level implementations
+            libc provides higher level implementations such as open, write, close, etc.
+
+    Ghidra Tips
+        Binary Patching
+            Can be used to patch binary files
+                Includes an assembler to allow use of actual instructions
+                Not just binary patching with hex values!
+            Right click on instruction > patch instruction
+            The export functionality is used to dump all initialized memory blocks within ghidra
+                The result is not a valid ELF file!
+
+        Bookmarks
+            When using ghidra, locations of interest can be bookmarked
+            To view bookmarks windows -> bookmarks
+            Bookmarks are tied to addresses, and can be categorized with custom fields
+            To bookmark an instruction right click > bookmark
+
+        Searching
+            When analyzing a program, you can search for various data types/patterns
+                Instructions - allows the user to search for uses of a particular instruction
+                Scalars
+                Direct references - Searches for references to that particular address/location
+                    Highlight instructions > search > direct references
+                Instruction patterns
+                    Highlight instructions > search > instruction patterns
+                Strings
+            Both program text and memory can be searched
+
+        Comments
+            Comments can be added to both the listing view and the decompiler view
+            Types of comments
+                Post
+                Plate
+                EOL
+                Pre
+            Right click > Comment
